@@ -23,10 +23,6 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
-
-    lintOptions {
-        abortOnError true
-    }
 }
 
 dependencies {
@@ -45,15 +41,14 @@ dependencies {
 
     implementation Libraries.timber
 
-    implementation Libraries.rxandroid
     implementation Libraries.rxkotlin
+
+    implementation Libraries.rxpaper
 
     implementation Libraries.retrofit
     implementation Libraries.rxjava_adapter
     implementation Libraries.moshi_converter
     implementation Libraries.logging_interceptor
-
-    implementation Libraries.rxpaper
 
     implementation Libraries.dagger
     kapt Libraries.dagger_compiler

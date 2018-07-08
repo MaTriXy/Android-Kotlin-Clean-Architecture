@@ -11,9 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.sanogueralorenzo.presentation.injection.component.Injector
-
-typealias f<T> = (T) -> Unit
+import com.sanogueralorenzo.presentation.di.Injector
 
 val Activity.app: App get() = application as App
 

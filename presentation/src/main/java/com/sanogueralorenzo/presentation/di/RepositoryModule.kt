@@ -1,4 +1,4 @@
-package com.sanogueralorenzo.presentation.injection.module
+package com.sanogueralorenzo.presentation.di
 
 import com.sanogueralorenzo.data.repository.CommentRepositoryImpl
 import com.sanogueralorenzo.data.repository.PostRepositoryImpl
