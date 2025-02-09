@@ -1,17 +1,20 @@
 apply plugin: 'com.android.dynamic-feature'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion Versions.compileSdk
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion Versions.minSdk
         targetSdkVersion Versions.targetSdk
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
-    implementation project(Modules.app)
-    implementation Libraries.kotlin
+    implementation project(':app')
+    implementation libs.kotlinStdlibJdk8
 }

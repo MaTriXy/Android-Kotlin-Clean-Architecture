@@ -1,45 +1,22 @@
 package com.sanogueralorenzo.cache
 
-import android.content.Context
-
 import com.pacoworks.rxpaper2.RxPaperBook
-import io.paperdb.Book
 import io.paperdb.Paper
+import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers.io
 
-/**
- * Paper is a fast NoSQL-like storage for Java/Kotlin objects on Android with automatic schema migration support.
- * See: https://github.com/pakoito/RxPaper2
- */
+class Cache {
 
-object CacheLibrary {
-    fun init(context: Context) = RxPaperBook.init(context)
-}
+    fun <T> load(key: String): Single<T> = RxPaperBook.with().read(key)
 
-class Cache<T> {
-    private val book: Book = Paper.book()
+    fun <T> save(key: String, data: T): Single<T> =
+        RxPaperBook.with().write(key, data).toSingleDefault(data)
 
-    fun load(key: String): T = book.read(key)
+    fun delete(key: String): Completable = RxPaperBook.with().delete(key)
 
-    fun save(key: String, anyObject: T): T =
-        book.write(key, anyObject).run { anyObject }
-}
+    fun <T> get(key: String): T? = Paper.book().read(key)
 
-class ReactiveCache<T> {
-    private val book: RxPaperBook = RxPaperBook.with(io())
+    fun <T> set(key: String, data: T) = Paper.book().write(key, data).let { Unit }
 
-    fun load(key: String): Single<T> = book.read(key)
-
-    fun save(key: String, anyObject: T): Single<T> =
-        book.write(key, anyObject).toSingleDefault(anyObject)
-}
-
-class MemoryCache<T> {
-    private val map: MutableMap<String, T> = mutableMapOf()
-
-    fun load(key: String): T = map.getValue(key)
-
-    fun save(key: String, anyObject: T): T =
-        map.put(key, anyObject).run { anyObject }
+    fun remove(key: String) = Paper.book().delete(key)
 }

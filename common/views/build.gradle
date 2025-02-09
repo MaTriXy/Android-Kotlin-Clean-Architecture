@@ -1,0 +1,24 @@
+apply from: "$rootDir/common-android-library.gradle"
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    correctErrorTypes = true
+}
+
+dependencies {
+    api libs.glide
+
+    api libs.mavericks
+
+    api libs.coreKtx
+    api libs.material
+    api libs.appcompat
+    api libs.constraintLayout
+    api libs.recyclerview
+    api libs.swipeRefreshLayout
+
+    api libs.epoxy
+    kapt libs.epoxyProcessor
+
+    api libs.lottie
+}

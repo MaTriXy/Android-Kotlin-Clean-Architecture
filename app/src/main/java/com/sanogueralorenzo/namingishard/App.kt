@@ -1,28 +1,18 @@
 package com.sanogueralorenzo.namingishard
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate
+import com.airbnb.mvrx.Mavericks
+import com.airbnb.mvrx.MavericksViewModelConfigFactory
 import com.sanogueralorenzo.cache.CacheLibrary
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
-import kotlin.random.Random
+import timber.log.Timber
 
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        // Unique initialization of Cache library to allow saving into device
+        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
+        registerActivityLifecycleCallbacks(ActivityLifecycleCallbacks())
+        Mavericks.viewModelConfigFactory = MavericksViewModelConfigFactory(applicationContext)
         CacheLibrary.init(this)
-
-        // Unique initialization of Dependency Injection library to allow the use of application context
-        startKoin { androidContext(this@App) }
-
-        // Random nightMode to make developer aware of day/night themes
-        val nightMode = when (Random.nextBoolean()) {
-            true -> AppCompatDelegate.MODE_NIGHT_YES
-            false -> AppCompatDelegate.MODE_NIGHT_NO
-        }
-        AppCompatDelegate.setDefaultNightMode(nightMode)
     }
 }

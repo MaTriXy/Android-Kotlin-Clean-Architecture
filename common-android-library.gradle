@@ -1,24 +1,45 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion Versions.compileSdk
+    compileSdkVersion 32
 
     defaultConfig {
-        minSdkVersion Versions.minSdk
-        targetSdkVersion Versions.targetSdk
-        versionCode Releases.versionCode
-        versionName Releases.versionName
+        minSdkVersion 24
+        targetSdkVersion 32
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        viewBinding = true
+
     }
 
     buildTypes {
+        buildType.javaCompileOptions.annotationProcessorOptions.arguments =
+                [
+                        logEpoxyTimings              : "false",
+                        enableParallelEpoxyProcessing: "true",
+                        validateEpoxyModelUsage      : String.valueOf(buildType.name == 'debug')
+                ]
+
         release {
             minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "$rootDir/app/proguard-rules.pro"
         }
     }
 }
 
 dependencies {
-    implementation Libraries.kotlin
+    implementation libs.kotlinStdlibJdk8
 }

@@ -1,17 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion Versions.compileSdk
+    compileSdkVersion 32
+
     defaultConfig {
-        applicationId ApplicationId.id
-        minSdkVersion Versions.minSdk
-        targetSdkVersion Versions.targetSdk
-        versionCode Releases.versionCode
-        versionName Releases.versionName
-        multiDexEnabled true
+        applicationId "com.sanogueralorenzo.namingishard"
+        minSdkVersion 24
+        targetSdkVersion 32
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
     }
 
     buildTypes {
@@ -20,38 +23,32 @@ android {
         }
     }
 
-    testOptions {
-        unitTests.returnDefaultValues = true
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
-    dynamicFeatures = [Modules.sample]
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 dependencies {
-    implementation project(Modules.cache)
-    implementation project(Modules.network)
-    implementation project(Modules.navigation)
-    implementation project(Modules.presentation)
+    implementation project(':common:resources')
 
-    implementation Libraries.kotlin
-    implementation FirebaseLibraries.core
-    implementation Libraries.crashlytics
+    implementation project(':common:views')
+    implementation project(':common:cache')
+    implementation project(':navigation')
+    implementation project(':libs:usermanager')
 
-    implementation SupportLibraries.design
-    implementation SupportLibraries.cardview
-    implementation SupportLibraries.appcompat
-    implementation SupportLibraries.recyclerview
+    implementation project(':features:onboarding')
+    implementation project(':features:home')
+    implementation project(':features:profile')
 
-    implementation Libraries.koinAndroid
-    implementation Libraries.koinViewModel
+    implementation libs.kotlinStdlibJdk8
+    implementation libs.timber
 
-    implementation Libraries.lifecycleExtensions
+    implementation libs.mavericks
 
-    implementation Libraries.rxjava
-    implementation Libraries.rxkotlin
-
-    implementation Libraries.moshiConverter
-
-    debugImplementation Libraries.leakCanaryAndroid
+    debugImplementation libs.leakCanary
 }
-
-apply plugin: 'com.google.gms.google-services'
